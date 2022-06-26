@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from settings import Settings, __VERSION__
+from app import api
+from app.middleware import GlobalsMiddleware
 import model
+
 
 def create_app(settings: Settings) -> FastAPI:
     """Applcation Factory"""
@@ -23,6 +26,7 @@ def create_app(settings: Settings) -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"]
     )
+    app.add_middleware(GlobalsMiddleware)
     # TODO GZipMiddleware
     # TODO TrustedHostMiddleware
     # TODO HTTPS RedirectMiddleWare ?

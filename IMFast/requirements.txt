@@ -3,3 +3,4 @@ uvicorn
 python-dotenv
 orjson
 pytest
+jinja2
