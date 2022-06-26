@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from settings import Settings, __VERSION__
 
-def create_app(config) -> FastAPI:
+def create_app(settings: Settings) -> FastAPI:
 	"""Applcation Factory"""
 	app = FastAPI(
-		title=config.APP_NAME,
-		description=config.APP_DESCRIPTION,
-        version=config.APP_VERSION,
-		docs_url=config.DOCS_URL,)
+		title=settings.app_name,
+		description=settings.description,
+        version=__VERSION__,
+		docs_url=settings.docs_url,)
 
 	app.add_middleware(
         CORSMiddleware,
