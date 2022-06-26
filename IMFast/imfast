@@ -1,0 +1,3 @@
+uvicorn main:application \
+--reload \
+--port 5000

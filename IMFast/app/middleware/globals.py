@@ -52,7 +52,7 @@ class GlobalsMiddleware:
 
 
 g = Globals()
-
+# FIXME 삭제 예정 helo Middleware로 대체
 
 if __name__ == '__main__':
     pass
