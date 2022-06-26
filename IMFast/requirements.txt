@@ -1,3 +1,5 @@
 fastapi
 uvicorn
-
+python-dotenv
+orjson
+pytest
