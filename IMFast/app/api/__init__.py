@@ -28,15 +28,16 @@ def init_app(app: FastAPI):
         process_time = time.time()
         response = await call_next(request)
         process_time = time.time() - process_time
+        response.headers["X-Process-Time"] = str(process_time)
 
         if process_time >= settings.slow_api_time:
-            log_str = (
+            request_body = await request.body()
+            log_str: str = (
                 f"\n!!! SLOW API DETECTED !!!\n"
-                f"ip: {request.client.host}\n"
+                f"time: {process_time}\n"
                 f"url: {request.url.path}\n"
-                # TODO 이상한 코루틴 객체가 온다?
-                f"input_body: {request.body()}\n"
-                f"slow time: {process_time}")
+                f"ip: {request.client.host}\n")
+            log_str += f"body: {str(request_body)}\n"
             logger.error(log_str)
 
         return response
