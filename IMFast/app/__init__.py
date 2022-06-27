@@ -11,7 +11,7 @@ from app.api.v1 import api as api_v1
 
 
 def create_app(settings: Settings) -> FastAPI:
-    """Applcation Factory"""
+    """Application Factory"""
     app = FastAPI(
         title=settings.app_name,
         description=settings.description,
