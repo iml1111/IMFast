@@ -28,8 +28,8 @@ def create_app(settings: Settings) -> FastAPI:
     # Extension/Middleware init
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=["*"],
         allow_credentials=True,
+        allow_origins=["*"],
         allow_methods=["*"],
         allow_headers=["*"]
     )
