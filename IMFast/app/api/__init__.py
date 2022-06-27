@@ -7,7 +7,6 @@ from typing import Callable
 from fastapi import FastAPI, Request
 from loguru import logger
 from settings import settings
-from app.middleware import g
 
 
 def init_app(app: FastAPI):
@@ -35,9 +34,16 @@ def init_app(app: FastAPI):
                 f"\n!!! SLOW API DETECTED !!!\n"
                 f"ip: {request.client.host}\n"
                 f"url: {request.url.path}\n"
-                # FIXME 이상한 코루틴 객체가 온다?
+                # TODO 이상한 코루틴 객체가 온다?
                 f"input_body: {request.body()}\n"
-                f"slow time: {g.process_time}")
+                f"slow time: {process_time}")
             logger.error(log_str)
 
         return response
+
+    @app.middleware('http')
+    async def hello_func_middleware(
+            request: Request,
+            call_next: Callable):
+        """executed before slow_api_tracker"""
+        return await call_next(request)

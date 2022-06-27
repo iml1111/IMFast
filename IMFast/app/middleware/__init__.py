@@ -1,1 +1,1 @@
-from .globals import GlobalsMiddleware, g
+from .hello import HelloMiddleware

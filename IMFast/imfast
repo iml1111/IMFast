@@ -1,3 +1,16 @@
-uvicorn main:application \
---reload \
---port 5000
+#!/bin/bash
+
+if [ "$1" = "run" ]; then
+    uvicorn main:application \
+    --reload \
+    --port 5001
+elif [ "$1" = "prod-run" ]; then
+    uvicorn main:application \
+    --port 5001
+elif [ "$1" = "" ]; then
+    python main.py
+else
+    python main.py "$*"
+fi
+
+

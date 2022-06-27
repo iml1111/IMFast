@@ -1,5 +1,5 @@
 import os
-from pydantic import BaseSettings, Field, validator
+from pydantic import BaseSettings, Field
 from fastapi import FastAPI
 
 __AUTHOR__ = "IML"

@@ -12,7 +12,7 @@ template = template_engine.TemplateResponse
 async def index(request: Request):
     return template(
         'index.html',
-       context={
+        context={
             'request': request,
             'description': settings.description
         }

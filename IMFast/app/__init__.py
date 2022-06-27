@@ -3,7 +3,7 @@ from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from settings import Settings, __VERSION__
 from app import api
-from app.middleware import GlobalsMiddleware
+from app.middleware import HelloMiddleware
 import model
 
 from app.api.template import api as template
@@ -33,7 +33,7 @@ def create_app(settings: Settings) -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"]
     )
-    app.add_middleware(GlobalsMiddleware)
+    app.add_middleware(HelloMiddleware)
     # TODO GZipMiddleware
     # TODO TrustedHostMiddleware
     # TODO HTTPS RedirectMiddleWare ?
