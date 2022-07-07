@@ -3,6 +3,7 @@ from fastapi.responses import ORJSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from settings import Settings, __VERSION__
 from app import api
+from app import error_handler
 from app.middleware import HelloMiddleware
 import model
 
@@ -23,6 +24,7 @@ def create_app(settings: Settings) -> FastAPI:
     # Built-in init
     settings.init_app(app)
     api.init_app(app)
+    error_handler.init_app(app)
     model.init_app(app, settings)
 
     # Extension/Middleware init
