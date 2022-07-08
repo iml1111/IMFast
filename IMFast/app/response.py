@@ -1,8 +1,9 @@
 """Response Shortcuts"""
+from typing import Any
 from fastapi.responses import ORJSONResponse as orjson_res
 
 
-def ok(result=None):
+def ok(result: Any = None):
     if result is None:
         return orjson_res(
             {'msg': 'ok'},
@@ -15,7 +16,7 @@ def ok(result=None):
         )
 
 
-def created(result=None):
+def created(result: Any = None):
     if result is None:
         return orjson_res(
             {'msg': 'created'},
@@ -31,7 +32,7 @@ def created(result=None):
 no_content = orjson_res({}, status_code=204)
 
 
-def bad_request(description):
+def bad_request(description: str):
     return orjson_res(
         {'msg': 'bad_request', 'description': description},
         status_code=400
@@ -47,7 +48,7 @@ bad_access_token = orjson_res(
 )
 
 
-def forbidden(description):
+def forbidden(description: str):
     return orjson_res(
         {
             'msg': 'forbidden',
