@@ -41,7 +41,8 @@ def create_app(settings: Settings) -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"]
     )
-    app.add_middleware(HelloMiddleware)
+    # If you want to use middleware, you can add it here.
+    #app.add_middleware(HelloMiddleware)
     # TODO GZipMiddleware
     # TODO TrustedHostMiddleware
     # TODO HTTPS RedirectMiddleWare ?
