@@ -43,10 +43,6 @@ def create_app(settings: Settings) -> FastAPI:
     )
     # If you want to use middleware, you can add it here.
     #app.add_middleware(HelloMiddleware)
-    # TODO GZipMiddleware
-    # TODO TrustedHostMiddleware
-    # TODO HTTPS RedirectMiddleWare ?
-    # https://fastapi.tiangolo.com/ko/advanced/middleware/
 
     # Register Routers
     app.include_router(template)
