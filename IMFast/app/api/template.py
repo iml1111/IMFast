@@ -8,8 +8,16 @@ template_engine = Jinja2Templates(
 template = template_engine.TemplateResponse
 
 
-@api.get('/')
+@api.get(
+    '/',
+    summary="Welcome to IMFast",
+    tags=['template'],
+)
 async def index(request: Request):
+    """
+    Welcome to IMFast
+    - **author**: IML
+    """
     return template(
         'index.html',
         context={

@@ -17,6 +17,12 @@ def create_app(settings: Settings) -> FastAPI:
         title=settings.app_name,
         description=settings.description,
         version=__VERSION__,
+        terms_of_service=settings.term_of_service,
+        contact={
+            "name": settings.contact_name,
+            "url": settings.contact_url,
+            "email": settings.contact_email
+        },
         docs_url=settings.docs_url,
         default_response_class=ORJSONResponse
     )

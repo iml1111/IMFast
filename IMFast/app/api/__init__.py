@@ -24,6 +24,7 @@ def init_app(app: FastAPI):
     async def slow_api_tracker(
             request: Request,
             call_next: Callable):
+        """slow api tracker middleware"""
         
         process_time = time.time()
         response = await call_next(request)
