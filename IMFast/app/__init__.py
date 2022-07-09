@@ -7,6 +7,7 @@ from app import error_handler
 from app.middleware import HelloMiddleware
 import model
 
+from app.api.auth import auth
 from app.api.template import api as template
 from app.api.v1 import api as api_v1
 
@@ -45,6 +46,7 @@ def create_app(settings: Settings) -> FastAPI:
     #app.add_middleware(HelloMiddleware)
 
     # Register Routers
+    app.include_router(auth, prefix="/api/auth")
     app.include_router(template)
     app.include_router(api_v1, prefix='/api/v1')
 

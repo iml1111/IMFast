@@ -3,9 +3,9 @@ from fastapi import Request, FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse
 from app.response import (
     bad_request, not_found, bad_jwt_token)
-from app.exception import BadJWTError
 from jose import JWTError
 from loguru import logger
+
 
 def init_app(app: FastAPI):
 

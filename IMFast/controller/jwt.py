@@ -47,17 +47,24 @@ def get_identity(
     return identity
 
 
-def get_token_type(
+def is_access(
     token: str, *,
     secret_key: str = settings.secret_key,
     algorithm: str = settings.jwt_algorithm,
 ):
     payload = _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
-    token_type = payload.get('token_type')
-    if token_type is None:
-        raise JWTError('No token_type claim in the JWT payload')
-    return token_type
+    return payload.get('token_type') == 'access'
+
+
+def is_refresh(
+    token: str, *,
+    secret_key: str = settings.secret_key,
+    algorithm: str = settings.jwt_algorithm,
+):
+    payload = _decode_token(
+        token, secret_key=secret_key, algorithm=algorithm)
+    return payload.get('token_type') == 'refresh'
 
 
 def get_raw_token(
@@ -66,8 +73,7 @@ def get_raw_token(
     algorithm: str = settings.jwt_algorithm,
 ):
     return _decode_token(
-        token, secret_key=secret_key, algorithm=algorithm
-    )
+        token, secret_key=secret_key, algorithm=algorithm)
 
 
 def _decode_token(
@@ -78,7 +84,7 @@ def _decode_token(
     return jwt.decode(
         token, secret_key,
         algorithms=[algorithm],
-        # available object in sub field.
+        # available any object in sub field.
         options={'verify_sub': False},
     )
 
