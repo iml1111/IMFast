@@ -1,7 +1,10 @@
 import traceback
 from fastapi import Request, FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse
-from app.response import bad_request, not_found
+from app.response import (
+    bad_request, not_found, bad_jwt_token)
+from app.exception import BadJWTError
+from jose import JWTError
 from loguru import logger
 
 def init_app(app: FastAPI):
@@ -11,6 +14,12 @@ def init_app(app: FastAPI):
             request: Request,
             exc: HTTPException):
         return bad_request(exc.detail)
+
+    @app.exception_handler(JWTError)
+    async def unauthorized_handler(
+            request: Request,
+            exc: HTTPException):
+        return bad_jwt_token(exc.detail)
 
     @app.exception_handler(404)
     async def not_found_handler(

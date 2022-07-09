@@ -35,17 +35,20 @@ no_content = orjson_res({}, status_code=204)
 def bad_request(description: str):
     return orjson_res(
         {'msg': 'bad_request', 'description': description},
-        status_code=400
+        status_code=400,
+
     )
 
+def bad_jwt_token(description: str):
+    return orjson_res(
+        {
+            'msg': 'bad_jwt_token',
+            'description': description
+        },
+        status_code=401,
+        headers={"WWW-Authenticate": "Bearer"},
+    )
 
-bad_access_token = orjson_res(
-    {
-        'msg':'unauthorized',
-        'description': "bad_access_token"
-    },
-    status_code=401,
-)
 
 
 def forbidden(description: str):

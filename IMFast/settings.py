@@ -19,8 +19,12 @@ class Settings(BaseSettings):
     contact_email: str = "shin10256@gmail.com"
     # Documentation url
     docs_url: str = "/docs"
-
+    # JWT settings
     secret_key: str = "super-secret"
+    jwt_algorithm: str = "HS256"
+    jwt_access_expires: int = 3600 * 24 * 7
+    jwt_refresh_expires: int = 3600 * 24 * 30
+    # Slow API settings
     slow_api_time: float = 0.5
 
     class Config:
