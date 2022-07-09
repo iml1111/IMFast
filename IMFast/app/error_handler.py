@@ -18,8 +18,8 @@ def init_app(app: FastAPI):
     @app.exception_handler(JWTError)
     async def unauthorized_handler(
             request: Request,
-            exc: HTTPException):
-        return bad_jwt_token(exc.detail)
+            exc: JWTError):
+        return bad_jwt_token(exc.args[0])
 
     @app.exception_handler(404)
     async def not_found_handler(

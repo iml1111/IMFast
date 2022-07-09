@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Body, Header
+from fastapi import APIRouter, Body, Header, Depends
+from app.depends import refresh_token, access_token
 from app.response import ok
 from controller.jwt import create_access_token, create_refresh_token
 
@@ -6,7 +7,7 @@ auth = APIRouter()
 
 
 @auth.post(
-    "/sign-in",
+    "/signin",
     summary='SignIn',
     tags=['auth'],
 )
@@ -33,11 +34,30 @@ async def login(
     tags=['auth']
 )
 async def refresh(
-    authorization: str = Header(...),
+    identity: str = Depends(refresh_token),
 ):
     """
     Refresh Token API
     """
-    from loguru import logger
-    logger.info(authorization)
-    return ok()
+    return ok({
+        "message": "Refresh Success",
+        "access_token": create_access_token(identity),
+        "refresh_token": create_refresh_token(identity)
+    })
+
+
+@auth.get(
+    "/me",
+    summary="Get User Info",
+    tags=['auth']
+)
+async def me(
+    identity: str = Depends(access_token),
+):
+    """
+    Get User Info API
+    """
+    return ok({
+        "message": "Get User Info Success",
+        "username": identity
+    })

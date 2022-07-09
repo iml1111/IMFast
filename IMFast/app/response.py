@@ -32,18 +32,18 @@ def created(result: Any = None):
 no_content = orjson_res({}, status_code=204)
 
 
-def bad_request(description: str):
+def bad_request(detail: str):
     return orjson_res(
-        {'msg': 'bad_request', 'description': description},
+        {'msg': 'bad_request', 'detail': detail},
         status_code=400,
 
     )
 
-def bad_jwt_token(description: str):
+def bad_jwt_token(detail: str):
     return orjson_res(
         {
             'msg': 'bad_jwt_token',
-            'description': description
+            'detail': detail
         },
         status_code=401,
         headers={"WWW-Authenticate": "Bearer"},
@@ -51,11 +51,11 @@ def bad_jwt_token(description: str):
 
 
 
-def forbidden(description: str):
+def forbidden(detail: str):
     return orjson_res(
         {
             'msg': 'forbidden',
-            'description': description
+            'detail': detail
         }, status_code=403,
     )
 
@@ -63,7 +63,7 @@ def forbidden(description: str):
 not_found = orjson_res(
     {
         'msg': 'not_found',
-        'description': "resource not found"
+        'detail': "resource not found"
     },
     status_code=404
 )

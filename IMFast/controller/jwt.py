@@ -54,7 +54,7 @@ def is_access(
 ):
     payload = _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
-    return payload.get('token_type') == 'access'
+    return payload.get('type') == 'access'
 
 
 def is_refresh(
@@ -64,7 +64,7 @@ def is_refresh(
 ):
     payload = _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
-    return payload.get('token_type') == 'refresh'
+    return payload.get('type') == 'refresh'
 
 
 def get_raw_token(
