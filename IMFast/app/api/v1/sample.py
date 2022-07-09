@@ -5,6 +5,15 @@ from . import api
 
 
 @api.get(
+    '/champion',
+    summary="Get Super Strong Champion",
+    tags=['champion'],
+)
+async def get_champion():
+    return ok()
+
+
+@api.get(
     '/sample/slow',
     summary="Slow API Sample",
     tags=['sample'])
