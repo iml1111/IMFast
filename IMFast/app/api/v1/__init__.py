@@ -1,21 +1,11 @@
-from typing import Callable, List
-from fastapi import APIRouter, Response, Request
-from fastapi.routing import APIRoute
+from fastapi import APIRouter
 from loguru import logger
-from app.request import GzipRequest
+from app.route import GzipRoute
 
 
-# Router level middleware
-class GzipRoute(APIRoute):
-    def get_route_handler(self) -> Callable:
-        original_route_handler = super().get_route_handler()
-        async def custom_route_handler(request: Request) -> Response:
-            request = GzipRequest(request.scope, request.receive)
-            return await original_route_handler(request)
-        return custom_route_handler
-
-
-api = APIRouter()
-api.route_class = GzipRoute
+api = APIRouter(
+    route_class=GzipRoute,
+    tags=['v1']
+)
 
 from . import sample

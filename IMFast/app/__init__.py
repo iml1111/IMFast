@@ -5,7 +5,7 @@ from settings import Settings, __VERSION__
 from app import api
 from app import error_handler
 from app.middleware import HelloMiddleware
-import model
+from model import init_app as model_init_app
 
 from app.api.auth import auth
 from app.api.template import api as template
@@ -32,7 +32,7 @@ def create_app(settings: Settings) -> FastAPI:
     settings.init_app(app)
     api.init_app(app)
     error_handler.init_app(app)
-    model.init_app(app, settings)
+    model_init_app(app, settings)
 
     # Extension/Middleware init
     app.add_middleware(
