@@ -1,32 +1,16 @@
+"""Basic Test for the API"""
+import pytest
 from typing import Callable
 from fastapi import FastAPI
 from httpx import AsyncClient
-import pytest
+from loguru import logger
 
 from test.fixture import app, client
-
-# TODO 전체 셋업/티어다운 가능?
-
-
-def setup_function(function: Callable):
-    """
-    setup any state tied to the execution of the given function.
-    Invoked for every test function in the module.
-    """
-    # TODO What is this?
-
-
-def teardown_function(function: Callable):
-    """
-    setup any state tied to the execution of the given function.
-    Invoked for every test function in the module.
-    """
-    # TODO What is this?
 
 
 def test_app_exists(app: FastAPI):
     """Test app exists"""
-    assert (app is not None)
+    assert app is not None
 
 
 @pytest.mark.anyio

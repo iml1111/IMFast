@@ -11,7 +11,7 @@ from settings import settings
 from _pytest.logging import caplog as _caplog
 
 
-@fixture(autouse=True)
+@fixture(scope='session')
 def app() -> FastAPI:
     """
     Create a FastAPI application for the tests.
@@ -20,7 +20,7 @@ def app() -> FastAPI:
     return app
 
 
-@fixture(autouse=True)
+@fixture
 async def client(app: FastAPI) -> AsyncClient:
     """
     Create a test client for the FastAPI application.
@@ -29,7 +29,7 @@ async def client(app: FastAPI) -> AsyncClient:
         yield ac
 
 
-@fixture(autouse=True)
+@fixture(autouse=True, scope='session')
 def caplog(_caplog):
     """Overiding pytest-capturelog's caplog fixture."""
     class PropagatingLogger(logging.Handler):
@@ -41,4 +41,5 @@ def caplog(_caplog):
         format="{message} {extra}",
         level="DEBUG")
     yield _caplog
+    # After the test, remove the handler again
     logger.remove(handler_id)

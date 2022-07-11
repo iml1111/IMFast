@@ -1,5 +1,3 @@
-#! bash
-
 if [ "$1" = "run" ]; then
     uvicorn main:application \
     --reload \
@@ -8,11 +6,12 @@ elif [ "$1" = "prod-run" ]; then
     uvicorn main:application \
     --port 5000
 elif [ "$1" = "test" ]; then
-    pytest "$*" -o log_cli=true -o log_cli_level=INFO -o log_cli_format="%(message)s"
+    pytest "$*" \
+    -o log_cli=true \
+    -o log_cli_level=INFO \
+     -o log_cli_format="%(message)s"
 elif [ "$1" = "" ]; then
     python main.py
 else
     python main.py "$*"
 fi
-
-
