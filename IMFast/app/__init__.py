@@ -4,8 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from settings import Settings, __VERSION__
 from app import api
 from app import error_handler
-from app.middleware import HelloMiddleware
-from model import init_app as model_init_app
+import model
 
 from app.api.auth import auth
 from app.api.template import api as template
@@ -32,7 +31,7 @@ def create_app(settings: Settings) -> FastAPI:
     settings.init_app(app)
     api.init_app(app)
     error_handler.init_app(app)
-    model_init_app(app, settings)
+    model.init_app(app, settings)
 
     # Extension/Middleware init
     app.add_middleware(
@@ -43,6 +42,7 @@ def create_app(settings: Settings) -> FastAPI:
         allow_headers=["*"]
     )
     # If you want to use middleware, you can add it here.
+    # from app.middleware import HelloMiddleware
     #app.add_middleware(HelloMiddleware)
 
     # Register Routers

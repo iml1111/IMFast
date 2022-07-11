@@ -2,11 +2,11 @@
 Application Management Module
 """
 import click
-from fastapi.routing import APIRoute
+from fastapi import FastAPI
 from app import create_app
 from settings import settings
 
-application = create_app(settings)
+application: FastAPI = create_app(settings)
 
 
 @click.group()
@@ -57,6 +57,12 @@ def routes():
             f'{route[0]: <{path_len + 2}}'
             f'{route[1]: <{method_len + 2}}'
             f'{route[2]: <{name_len + 2}}')
+
+
+@cli.command()
+def test():
+    """Run tests"""
+    raise NotImplementedError("Please use 'imfast test'.")
 
 if __name__ == '__main__':
     cli()

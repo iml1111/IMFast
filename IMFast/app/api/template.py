@@ -5,7 +5,7 @@ from settings import settings, BASE_DIR
 api = APIRouter()
 template_engine = Jinja2Templates(
     directory=f"{BASE_DIR}/app/asset")
-template = template_engine.TemplateResponse
+templating = template_engine.TemplateResponse
 
 
 @api.get(
@@ -18,7 +18,7 @@ async def index(request: Request):
     Welcome to IMFast
     - **author**: IML
     """
-    return template(
+    return templating(
         'index.html',
         context={
             'request': request,
