@@ -1,4 +1,8 @@
-"""Basic Test for the API"""
+"""
+Basic Test for the API
+https://docs.pytest.org/en/7.1.x/how-to/index.html
+https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#using-markers-to-pass-data-to-fixtures
+"""
 import pytest
 from typing import Callable
 from fastapi import FastAPI
