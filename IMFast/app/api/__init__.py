@@ -1,7 +1,3 @@
-"""
-ref: https://fastapi.tiangolo.com/tutorial/middleware/
-# FIXME check https://stackoverflow.com/questions/60098005/fastapi-starlette-get-client-real-ip
-"""
 import time
 from typing import Callable
 from fastapi import FastAPI, Request
