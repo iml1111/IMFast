@@ -85,3 +85,45 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 ```
 
+## Commands
+
+You can try various commands in the form of `imfast <command>`. The code is written in `main.py`.
+
+```shell
+$ ./imfast --help
+Usage: main.py [OPTIONS] COMMAND [ARGS]...
+
+  Command Groups
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  init-db   Sample command
+  prod-run  Please use 'imfast prod-run'.
+  routes    Print all routes
+  run       Please use 'imfast run'.
+  test      Run tests
+  
+$ ./imfast routes
+# Routes
+Path ======================= Methods ======= Name ==============
+/                           {'GET'}          index
+/api/auth/me                {'GET'}          me
+/api/auth/refresh           {'POST'}         refresh
+/api/auth/signin            {'POST'}         login
+/api/v1/champion            {'GET'}          get_champion
+/api/v1/champion            {'POST'}         create_champion
+/api/v1/sample/bad_request  {'PUT'}          bad_request_api
+/api/v1/sample/error        {'POST'}         error
+/api/v1/sample/slow         {'GET'}          slow
+/docs                       {'HEAD', 'GET'}  swagger_ui_html
+/docs/oauth2-redirect       {'HEAD', 'GET'}  swagger_ui_redirect
+/openapi.json               {'HEAD', 'GET'}  openapi
+/redoc                      {'HEAD', 'GET'}  redoc_html
+```
+
+
+
+## Concpets
+
