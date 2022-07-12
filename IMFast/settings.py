@@ -29,8 +29,8 @@ class Settings(BaseSettings):
 
     class Config:
         env_prefix = f"{APP_NAME.upper()}_"
-        # TODO: 어떻게 env 파일을 분리시켜 관리할 수 있을까
-        env_file = '.env'
+        # default: development env
+        env_file = 'dev.env'
         env_file_encoding = 'utf-8'
 
     def init_app(self, app: FastAPI):
