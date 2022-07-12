@@ -25,7 +25,8 @@ async def get_champion():
 @api.post(
     '/champion',
     summary="Create Super Strong Champion",
-    response_model=CREATED[ChampionCreated]
+    response_model=CREATED[ChampionCreated],
+    status_code=201,
 )
 async def create_champion(
     champion: Champion
