@@ -4,12 +4,9 @@ https://docs.pytest.org/en/7.1.x/how-to/index.html
 https://docs.pytest.org/en/7.1.x/how-to/fixtures.html#using-markers-to-pass-data-to-fixtures
 """
 import pytest
-from typing import Callable
 from fastapi import FastAPI
 from httpx import AsyncClient
 from loguru import logger
-
-from test.fixture import app, client
 
 
 def test_app_exists(app: FastAPI):

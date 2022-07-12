@@ -25,11 +25,13 @@ async def client(app: FastAPI) -> AsyncClient:
     """
     Create a test client for the FastAPI application.
     """
-    async with AsyncClient(app=app, base_url="http://localhost:5000") as ac:
+    async with AsyncClient(
+            app=app,
+            base_url="http://localhost:5000") as ac:
         yield ac
 
 
-@fixture(autouse=True, scope='session')
+@fixture(autouse=True)
 def caplog(_caplog):
     """Overiding pytest-capturelog's caplog fixture."""
     class PropagatingLogger(logging.Handler):
