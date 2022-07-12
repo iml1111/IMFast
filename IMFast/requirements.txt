@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+python-dotenv
+orjson
+pytest
+jinja2
+loguru
+python-jose[cryptography]
+passlib[bcrypt]
+requests
+httpx
+trio
