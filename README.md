@@ -34,7 +34,7 @@ In IMFast, the following libraries are additionally installed for convenient dev
 
 To run the application, you need to set the following environment variables.
 
-For the `python-dotenv` library, you can write an `.env` file in the same path as `settings.py`, or you can directly enter an environment variable.
+For the `python-dotenv` library, you can write an `dev.env` file in the same path as `settings.py`, or you can directly enter an environment variable.
 
 ```
 - APP_NAME
@@ -87,7 +87,7 @@ INFO:     Application startup complete.
 
 ## Commands
 
-You can try various commands in the form of `imfast <command>`. The code is written in `main.py`.
+You can try various commands in the form of `imfast <command>`. The command codes are written in `main.py`.
 
 ```shell
 $ ./imfast --help
@@ -123,7 +123,114 @@ Path ======================= Methods ======= Name ==============
 /redoc                      {'HEAD', 'GET'}  redoc_html
 ```
 
+`IMFast/imfast` is simple shell script, Help your fastapi development. 
+
+If you want to check the script detail, click [here.](https://github.com/iml1111/IMFast/blob/main/IMFast/imfast)
 
 
-## Concpets
 
+# Concepts
+
+### Application Factory
+
+Applications should operate differently at development, testing, and production levels.
+
+### Dependency Separation
+
+All Controllers and Modules must be independently executable except for API endpoint functions.
+
+### Extremely scalable
+
+All structures are just files and folders based on modules and packages that are basically supported by Python. There are no restrictions, and you should be able to expand and change it as much as you want.
+
+
+
+## Structure
+
+```
+IMFast
+├── app
+│   ├── __init__.py
+│   ├── api
+│   │   ├── __init__.py
+│   │   ├── auth.py
+│   │   ├── template.py
+│   │   └── v1
+│   │       ├── __init__.py
+│   │       └── sample.py
+│   ├── asset
+│   │   └── index.html
+│   ├── decorator.py
+│   ├── depends
+│   │   ├── __init__.py
+│   │   └── jwt.py
+│   ├── error_handler.py
+│   ├── exception.py
+│   ├── middleware
+│   │   ├── __init__.py
+│   │   └── hello.py
+│   ├── request.py
+│   ├── response.py
+│   └── route
+│       ├── __init__.py
+│       └── gzip.py
+│
+├── controller
+│   ├── __init__.py
+│   ├── jwt.py
+│   └── password.py
+│
+├── model
+│   ├── __init__.py
+│   └── appmodel
+│       ├── __init__.py
+│       └── champion.py
+│
+├── test
+│   ├── __init__.py
+│   ├── conftest.py
+│   ├── test_basics.py
+│   └── test_sample.py
+│
+├── main.py
+├── settings.py
+├── imfast
+├── requirements.txt
+├── dev.env
+└── prod.env
+```
+
+## main.py
+
+main module of IMFast. It manages the objects created by the application factory.
+
+It calls the appropriate settings from `settings.py`, creates an Application object, and executes the given command.
+
+## app
+
+Here, code related to FastAPI is written. Required resources are placed in the appropriate space according to the rules adhered to by FastAPI.
+
+- **app/api**: set of API Routers
+- **app/assets**: set of static templates
+- **app/decorator**: It is a set that manages API level middleware as a decorator.
+- **app/depends**: set of FastAPI Denpendencies
+- **app/error_handler**: set of Exception and Status code Handler
+- **app/exception**: set of custom Exceptions
+- **app/middleware**: set of FastAPI custom Middlewares
+- **app/route**: set of custom FastAPI APIRoute
+- **app/request**: set of custom FastAPI Request
+- **app/response**: set of API Response and Response Model Factory
+
+## controller
+
+This means an independent module that does not depend on FastAPI.
+
+## model 
+
+It manages various types of data models used in applications including DTO and ORM.
+
+- **model/appmodel**: A set of `Pydantic` models to control FastAPI body data
+
+## test
+
+It is a test module package written based on `pytest`.
