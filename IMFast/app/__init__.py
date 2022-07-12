@@ -1,14 +1,20 @@
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
-from fastapi.middleware.cors import CORSMiddleware
 from settings import Settings, __VERSION__
 from app import api
 from app import error_handler
 import model
 
+# Routers
 from app.api.auth import auth
 from app.api.template import api as template
 from app.api.v1 import api as api_v1
+
+# Middleware
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
+from app.middleware import HelloMiddleware
 
 
 def create_app(settings: Settings) -> FastAPI:
@@ -39,11 +45,17 @@ def create_app(settings: Settings) -> FastAPI:
         allow_credentials=True,
         allow_origins=["*"],
         allow_methods=["*"],
-        allow_headers=["*"]
-    )
+        allow_headers=["*"])
+    app.add_middleware(
+        TrustedHostMiddleware,
+        allowed_hosts=["*"])
+    app.add_middleware(
+        GZipMiddleware,
+        minimum_size=1024)
+    """
     # If you want to use middleware, you can add it here.
-    # from app.middleware import HelloMiddleware
-    #app.add_middleware(HelloMiddleware)
+    app.add_middleware(HelloMiddleware)
+    """
 
     # Register Routers
     app.include_router(auth, prefix="/api/auth")
