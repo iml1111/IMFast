@@ -2,8 +2,6 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 from settings import Settings, __VERSION__
 from app import api
-from app import error_handler
-import model
 
 # Routers
 from app.api.auth import auth
@@ -35,9 +33,7 @@ def create_app(settings: Settings) -> FastAPI:
 
     # Built-in init
     settings.init_app(app)
-    api.init_app(app)
-    error_handler.init_app(app)
-    model.init_app(app, settings)
+    api.init_app(app, settings)
 
     # Extension/Middleware init
     app.add_middleware(

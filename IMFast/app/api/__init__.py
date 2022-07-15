@@ -2,15 +2,21 @@ import time
 from typing import Callable
 from fastapi import FastAPI, Request
 from loguru import logger
-from settings import settings
+from settings import settings, Settings
+import model
+from app import error_handler
 
 
-def init_app(app: FastAPI):
+def init_app(
+        app: FastAPI,
+        app_settings: Settings):
     """Declare your built-in Functional Middleware"""
 
     @app.on_event("startup")
     async def startup():
         """run before the application starts"""
+        model.init_app(app, app_settings)
+        error_handler.init_app(app)
 
     @app.on_event("shutdown")
     async def shutdown():
