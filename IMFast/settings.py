@@ -30,11 +30,16 @@ class Settings(BaseSettings):
     class Config:
         env_prefix = f"{APP_NAME.upper()}_"
         # default: development env
-        env_file = 'dev.env'
+        env_file = BASE_DIR + '/dev.env'
         env_file_encoding = 'utf-8'
 
     def init_app(self, app: FastAPI):
         ...
+
+
+class TestSettings(Settings):
+    """Test settings"""
+    slow_api_time: float = 1.0
 
 
 settings = Settings()

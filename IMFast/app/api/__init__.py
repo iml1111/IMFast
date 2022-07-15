@@ -2,15 +2,22 @@ import time
 from typing import Callable
 from fastapi import FastAPI, Request
 from loguru import logger
-from settings import settings
+from starlette_context import context
+from settings import settings, Settings
+import model
+from app import error_handler
 
 
-def init_app(app: FastAPI):
+def init_app(
+        app: FastAPI,
+        app_settings: Settings):
     """Declare your built-in Functional Middleware"""
 
     @app.on_event("startup")
     async def startup():
         """run before the application starts"""
+        model.init_app(app, app_settings)
+        error_handler.init_app(app)
 
     @app.on_event("shutdown")
     async def shutdown():
@@ -28,7 +35,8 @@ def init_app(app: FastAPI):
         response.headers["X-Process-Time"] = str(process_time)
 
         if process_time >= settings.slow_api_time:
-            request_body = await request.body()
+            # Get body in the ContextMiddleware
+            request_body = context.get('body')
             log_str: str = (
                 f"\n!!! SLOW API DETECTED !!!\n"
                 f"time: {process_time}\n"
