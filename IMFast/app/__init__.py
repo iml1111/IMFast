@@ -1,6 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.responses import ORJSONResponse
 from settings import Settings, __VERSION__
+from app.depends.context import parse_request_body
 from app import api
 
 # Routers
@@ -12,6 +13,7 @@ from app.api.v1 import api as api_v1
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from starlette_context.middleware import RawContextMiddleware
 from app.middleware import HelloMiddleware
 
 
@@ -28,7 +30,10 @@ def create_app(settings: Settings) -> FastAPI:
             "email": settings.contact_email
         },
         docs_url=settings.docs_url,
-        default_response_class=ORJSONResponse
+        default_response_class=ORJSONResponse,
+        dependencies=[
+            Depends(parse_request_body),
+        ],
     )
 
     # Built-in init
@@ -48,6 +53,7 @@ def create_app(settings: Settings) -> FastAPI:
     app.add_middleware(
         GZipMiddleware,
         minimum_size=1024)
+    app.add_middleware(RawContextMiddleware)
     """
     # If you want to use middleware, you can add it here.
     app.add_middleware(HelloMiddleware)

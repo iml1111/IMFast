@@ -9,4 +9,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 requests
 httpx
-trio
+starlette-context
