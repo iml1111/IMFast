@@ -19,7 +19,7 @@ async def login(
     Login API
     """
     if username == "admin" and password == "admin":
-        return ok({
+        return OK({
             "message": "Login Success",
             "access_token": create_access_token(username),
             "refresh_token": create_refresh_token(username)
@@ -39,7 +39,7 @@ async def refresh(
     """
     Refresh Token API
     """
-    return Ok({
+    return OK({
         "message": "Refresh Success",
         "access_token": create_access_token(identity),
         "refresh_token": create_refresh_token(identity)
