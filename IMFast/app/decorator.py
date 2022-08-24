@@ -1,7 +1,6 @@
 """App Decorator"""
 import time
 from functools import wraps
-from app.middleware import g
 from settings import settings
 
 
