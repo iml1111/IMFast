@@ -20,4 +20,4 @@ RUN apk update && \
 
 EXPOSE 5000
 
-CMD ["/home/IMFast/imfast", "prod-run"]
+CMD ["/home/IMFast/imfast.sh", "prod-run"]
