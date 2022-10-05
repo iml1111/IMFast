@@ -1,6 +1,7 @@
 """Response Shortcuts"""
 from typing import Any
 from uuid import uuid4
+from fastapi import Response, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import ORJSONResponse as orjson_res
 from pydantic import BaseModel
@@ -62,7 +63,7 @@ class Response201ModelFactory:
 CREATED = Response201ModelFactory()
 
 
-no_content = orjson_res({}, status_code=204)
+no_content = Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 def bad_request(detail: str):
