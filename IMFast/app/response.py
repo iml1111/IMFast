@@ -101,3 +101,11 @@ not_found = orjson_res(
     },
     status_code=404
 )
+
+conflict = orjson_res(
+    {
+        'msg': 'conflict',
+        'detail': "resource already exists"
+    },
+    status_code=409
+)
