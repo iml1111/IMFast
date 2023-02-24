@@ -2,7 +2,7 @@ from fastapi import FastAPI, Depends
 from fastapi.responses import ORJSONResponse
 from settings import Settings, __VERSION__
 from app.depends.context import parse_request_body
-from app import api
+from app import api, error_handler
 
 # Routers
 from app.api.auth import auth
@@ -39,6 +39,7 @@ def create_app(settings: Settings) -> FastAPI:
     # Built-in init
     settings.init_app(app)
     api.init_app(app, settings)
+    error_handler.init_app(app)
 
     # Extension/Middleware init
     app.add_middleware(

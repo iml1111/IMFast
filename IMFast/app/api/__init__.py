@@ -5,7 +5,6 @@ from loguru import logger
 from starlette_context import context
 from settings import settings, Settings
 import model
-from app import error_handler
 
 
 def init_app(
@@ -17,7 +16,6 @@ def init_app(
     async def startup():
         """run before the application starts"""
         model.init_app(app, app_settings)
-        error_handler.init_app(app)
 
     @app.on_event("shutdown")
     async def shutdown():
