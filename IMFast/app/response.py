@@ -7,60 +7,36 @@ from fastapi.responses import ORJSONResponse as orjson_res
 from pydantic import BaseModel
 
 
-class Response200ModelFactory:
+class ResponseModelFactory:
+    def __init__(self, status_type: str, status_code: int):
+        self.status_type = status_type
+        self.status_code = status_code
 
     def __getitem__(self, result_type):
-        class ResponseModel200(BaseModel):
-            msg: str = 'ok'
+        class ResponseModel(BaseModel):
+            msg: str = self.status_type
             result: result_type
         # Class Anonymization
-        class_obj = ResponseModel200
+        class_obj = ResponseModel
         class_obj.__name__ = (
                 result_type.__name__ + str(uuid4()))
         return class_obj
-
+    
     def __call__(self, result: Any = None):
         if result:
             result = jsonable_encoder(result)
             return orjson_res(
-                {'msg': 'ok', 'result': result},
-                status_code=200,
+                {'msg': self.status_type, 'result': result},
+                status_code=self.status_code,
             )
         else:
             return orjson_res(
-                {'msg': 'ok'},
-                status_code=200,
+                {'msg': self.status_type},
+                status_code=self.status_code,
             )
 
-OK = Response200ModelFactory()
-
-
-class Response201ModelFactory:
-
-    def __getitem__(self, result_type):
-        class ResponseModel201(BaseModel):
-            msg: str = 'created'
-            result: result_type
-        # Class Anonymization
-        class_obj = ResponseModel201
-        class_obj.__name__ = (
-                result_type.__name__ + str(uuid4()))
-        return class_obj
-
-    def __call__(self, result: Any = None):
-        if result:
-            result = jsonable_encoder(result)
-            return orjson_res(
-                {'msg': 'created', 'result': result},
-                status_code=201,
-            )
-        else:
-            return orjson_res(
-                {'msg': 'created'},
-                status_code=201,
-            )
-
-CREATED = Response201ModelFactory()
+OK = ResponseModelFactory('ok', 200)
+CREATED = ResponseModelFactory('created', 201)
 
 
 no_content = Response(status_code=status.HTTP_204_NO_CONTENT)
