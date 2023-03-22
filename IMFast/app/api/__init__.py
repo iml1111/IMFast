@@ -2,7 +2,6 @@ import time
 from typing import Callable
 from fastapi import FastAPI, Request
 from loguru import logger
-from starlette_context import context
 from settings import settings, Settings
 import model
 
@@ -34,13 +33,11 @@ def init_app(
 
         if process_time >= settings.slow_api_time:
             # Get body in the ContextMiddleware
-            request_body = context.get('body')
             log_str: str = (
                 f"\n!!! SLOW API DETECTED !!!\n"
                 f"time: {process_time}\n"
                 f"url: {request.url.path}\n"
                 f"ip: {request.client.host}\n")
-            log_str += f"body: {str(request_body)}\n"
             logger.error(log_str)
 
         return response

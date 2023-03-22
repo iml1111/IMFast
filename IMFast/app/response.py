@@ -35,9 +35,10 @@ class ResponseModelFactory:
                 status_code=self.status_code,
             )
 
-OK = ResponseModelFactory('ok', 200)
-CREATED = ResponseModelFactory('created', 201)
 
+OK = ResponseModelFactory('ok', 200)
+
+CREATED = ResponseModelFactory('created', 201)
 
 no_content = Response(status_code=status.HTTP_204_NO_CONTENT)
 
@@ -49,6 +50,7 @@ def bad_request(detail: str):
 
     )
 
+
 def bad_jwt_token(detail: str):
     return orjson_res(
         {
@@ -58,7 +60,6 @@ def bad_jwt_token(detail: str):
         status_code=401,
         headers={"WWW-Authenticate": "Bearer"},
     )
-
 
 
 def forbidden(detail: str):
