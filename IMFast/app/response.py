@@ -88,9 +88,9 @@ conflict = orjson_res(
 )
 
 
-def unprocessable_content(detail: str, errors: Optional[list] = None):
+def unprocessable_entity(detail: str, errors: Optional[list] = None):
     if errors:
-        body = {'msg': 'bad_request', 'detail': detail, 'errors': errors}
+        body = {'msg': 'unprocessable_entity', 'detail': detail, 'errors': errors}
     else:
-        body = {'msg': 'bad_request', 'detail': detail}
+        body = {'msg': 'unprocessable_entity', 'detail': detail}
     return orjson_res(body, status_code=422)
