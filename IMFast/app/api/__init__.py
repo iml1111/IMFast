@@ -1,7 +1,9 @@
 import time
 from typing import Callable
 from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
 from loguru import logger
+from app.response import unprocessable_entity
 from settings import settings, Settings
 import model
 
@@ -19,6 +21,13 @@ def init_app(
     @app.on_event("shutdown")
     async def shutdown():
         """run when the application is shutting down"""
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(request: Request, exc: RequestValidationError):
+        """Validation Exception Handler"""
+        errors: list = exc.errors()
+        detail = errors[0].get('msg') if errors else None
+        return unprocessable_entity(detail, errors)
 
     @app.middleware("http")
     async def slow_api_tracker(

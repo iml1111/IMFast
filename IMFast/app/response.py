@@ -1,5 +1,5 @@
 """Response Shortcuts"""
-from typing import Any
+from typing import Any, Optional
 from uuid import uuid4
 from fastapi import Response, status
 from fastapi.encoders import jsonable_encoder
@@ -86,3 +86,11 @@ conflict = orjson_res(
     },
     status_code=409
 )
+
+
+def unprocessable_entity(detail: str, errors: Optional[list] = None):
+    if errors:
+        body = {'msg': 'unprocessable_entity', 'detail': detail, 'errors': errors}
+    else:
+        body = {'msg': 'unprocessable_entity', 'detail': detail}
+    return orjson_res(body, status_code=422)
