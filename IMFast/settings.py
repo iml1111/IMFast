@@ -3,7 +3,7 @@ from pydantic import BaseSettings, Field
 from fastapi import FastAPI
 
 __AUTHOR__ = "IML"
-__VERSION__ = "0.1.1"
+__VERSION__ = "0.4.1"
 
 APP_NAME = "IMFast"
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
