@@ -1,4 +1,5 @@
 fastapi
+pydantic-settings
 uvicorn
 python-dotenv
 orjson
@@ -9,3 +10,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 requests
 httpx
+pyyaml
