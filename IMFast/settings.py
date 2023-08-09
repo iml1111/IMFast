@@ -1,5 +1,5 @@
 import os
-from pydantic import BaseSettings, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from fastapi import FastAPI
 
 __AUTHOR__ = "IML"
@@ -11,7 +11,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Settings(BaseSettings):
     # Description settings
-    app_name: str = Field(APP_NAME, env='APP_NAME')
+    app_name: str = APP_NAME
     description: str = "Welcome to IMFast."
     term_of_service: str = "https://github.com/iml1111"
     contact_name: str = __AUTHOR__
@@ -27,11 +27,12 @@ class Settings(BaseSettings):
     # Slow API settings
     slow_api_time: float = 0.5
 
-    class Config:
-        env_prefix = f"{APP_NAME.upper()}_"
+    model_config = SettingsConfigDict(
+        env_prefix=f"{APP_NAME.upper()}_",
         # default: development env
-        env_file = BASE_DIR + '/dev.env'
-        env_file_encoding = 'utf-8'
+        env_file=BASE_DIR + '/dev.env',
+        env_file_encoding='utf-8',
+    )
 
     def init_app(self, app: FastAPI):
         ...
@@ -46,5 +47,5 @@ settings = Settings()
 
 
 if __name__ == '__main__':
-    print(settings.dict())
+    print(settings.model_dump())
     print(BASE_DIR)

@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 
 class Champion(BaseModel):
@@ -7,7 +7,7 @@ class Champion(BaseModel):
     health: int
     affiliation: str
 
-    @validator('role')
+    @field_validator('role')
     def role_validator(cls, v):
         if v not in ('Tank', 'Damage', 'Support'):
             raise ValueError(
