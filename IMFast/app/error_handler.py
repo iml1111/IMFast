@@ -1,8 +1,11 @@
 import traceback
 from fastapi import Request, FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse
+from fastapi.exceptions import RequestValidationError
 from app.response import (
-    bad_request, not_found, bad_jwt_token)
+    bad_request, not_found, bad_jwt_token,
+    unprocessable_entity
+)
 from jose import JWTError
 from loguru import logger
 
@@ -14,6 +17,15 @@ def init_app(app: FastAPI):
             request: Request,
             exc: HTTPException):
         return bad_request(exc.detail)
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_exception_handler(
+        request: Request,
+        exc: RequestValidationError):
+        """Validation Exception Handler"""
+        errors: list = exc.errors()
+        detail = errors[0].get('msg') if errors else None
+        return unprocessable_entity(detail, errors)
 
     @app.exception_handler(JWTError)
     async def unauthorized_handler(
