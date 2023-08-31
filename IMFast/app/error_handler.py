@@ -25,6 +25,10 @@ def init_app(app: FastAPI):
         """Validation Exception Handler"""
         errors: list = exc.errors()
         detail = errors[0].get('msg') if errors else None
+        for e in errors:
+            if e.get('ctx'):
+                e['ctx'] = str(e['ctx'])
+        
         return unprocessable_entity(detail, errors)
 
     @app.exception_handler(JWTError)
