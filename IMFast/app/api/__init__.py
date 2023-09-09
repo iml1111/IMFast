@@ -36,7 +36,7 @@ def init_app(
             log_str: str = (
                 f"\n!!! SLOW API DETECTED !!!\n"
                 f"time: {process_time}\n"
-                f"url: {request.url.path}\n"
+                f"url: [{request.method}] {request.url._url}\n"
                 f"ip: {request.client.host}\n")
             logger.error(log_str)
 
