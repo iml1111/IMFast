@@ -31,8 +31,10 @@ def create_app(settings: Settings) -> FastAPI:
         default_response_class=ORJSONResponse,
     )
 
+    # App Module init
+    app.settings = settings
+
     # Built-in init
-    settings.init_app(app)
     api.init_app(app, settings)
     error_handler.init_app(app)
 

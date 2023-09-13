@@ -1,7 +1,5 @@
 """App Decorator"""
-import time
 from functools import wraps
-from settings import settings
 
 
 def hello_deco(func):

@@ -1,9 +1,8 @@
 import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from fastapi import FastAPI
 
 __AUTHOR__ = "IML"
-__VERSION__ = "0.5.1"
+__VERSION__ = "0.6.1"
 
 APP_NAME = "IMFast"
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -34,18 +33,7 @@ class Settings(BaseSettings):
         env_file_encoding='utf-8',
     )
 
-    def init_app(self, app: FastAPI):
-        ...
-
 
 class TestSettings(Settings):
     """Test settings"""
     slow_api_time: float = 1.0
-
-
-settings = Settings()
-
-
-if __name__ == '__main__':
-    print(settings.model_dump())
-    print(BASE_DIR)

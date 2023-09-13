@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
-from settings import settings, BASE_DIR
+from settings import BASE_DIR
 
 api = APIRouter()
 template_engine = Jinja2Templates(
@@ -22,6 +22,6 @@ async def index(request: Request):
         'index.html',
         context={
             'request': request,
-            'description': settings.description
+            'description': request.app.settings.description
         }
     )
