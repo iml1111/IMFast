@@ -1,14 +1,13 @@
 from uuid import uuid4
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-from settings import settings
 
 
 def create_access_token(
     data, *,
-    expires_delta: int = settings.jwt_access_expires,
-    secret_key: str = settings.secret_key,
-    algorithm: str = settings.jwt_algorithm,
+    expires_delta: int,
+    secret_key: str,
+    algorithm: str,
 ) -> str:
     return _create_token(
         data,
@@ -21,9 +20,9 @@ def create_access_token(
 
 def create_refresh_token(
     data, *,
-    expires_delta: int = settings.jwt_refresh_expires,
-    secret_key: str = settings.secret_key,
-    algorithm: str = settings.jwt_algorithm,
+    expires_delta: int,
+    secret_key: str,
+    algorithm: str,
 ) -> str:
     return _create_token(
         data,
@@ -36,8 +35,8 @@ def create_refresh_token(
 
 def get_identity(
     token: str, *,
-    secret_key: str = settings.secret_key,
-    algorithm: str = settings.jwt_algorithm,
+    secret_key: str,
+    algorithm: str,
 ):
     payload = _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
@@ -49,8 +48,8 @@ def get_identity(
 
 def is_access(
     token: str, *,
-    secret_key: str = settings.secret_key,
-    algorithm: str = settings.jwt_algorithm,
+    secret_key: str,
+    algorithm: str,
 ):
     payload = _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
@@ -59,8 +58,8 @@ def is_access(
 
 def is_refresh(
     token: str, *,
-    secret_key: str = settings.secret_key,
-    algorithm: str = settings.jwt_algorithm,
+    secret_key: str,
+    algorithm: str,
 ):
     payload = _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
@@ -69,8 +68,8 @@ def is_refresh(
 
 def get_raw_token(
     token: str, *,
-    secret_key: str = settings.secret_key,
-    algorithm: str = settings.jwt_algorithm,
+    secret_key: str,
+    algorithm: str,
 ):
     return _decode_token(
         token, secret_key=secret_key, algorithm=algorithm)
@@ -107,13 +106,3 @@ def _create_token(
     }
     token = jwt.encode(to_encode, secret_key, algorithm=algorithm)
     return token
-
-
-if __name__ == '__main__':
-    user_id = {'user_id': '1'}
-    ac, rf = create_access_token(user_id), create_refresh_token(user_id)
-    print(ac)
-    print(rf)
-    print(get_identity(ac))
-    print(get_identity(rf))
-

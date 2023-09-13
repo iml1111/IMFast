@@ -1,8 +1,9 @@
 import time
+from urllib.parse import urlsplit
 from typing import Callable
 from fastapi import FastAPI, Request
 from loguru import logger
-from settings import settings, Settings
+from settings import Settings
 import model
 
 
@@ -31,12 +32,13 @@ def init_app(
         process_time = time.time() - process_time
         response.headers["X-Process-Time"] = str(process_time)
 
-        if process_time >= settings.slow_api_time:
-            # Get body in the ContextMiddleware
+        if process_time >= app_settings.slow_api_time:
+            request_url = urlsplit(request.url._url)
             log_str: str = (
                 f"\n!!! SLOW API DETECTED !!!\n"
                 f"time: {process_time}\n"
-                f"url: [{request.method}] {request.url._url}\n"
+                f"url: [{request.method}] {request_url.path}"
+                f"{'?' + request_url.query if request_url.query else ''}\n"
                 f"ip: {request.client.host}\n")
             logger.error(log_str)
 

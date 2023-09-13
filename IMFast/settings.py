@@ -34,18 +34,7 @@ class Settings(BaseSettings):
         env_file_encoding='utf-8',
     )
 
-    def init_app(self, app: FastAPI):
-        ...
-
 
 class TestSettings(Settings):
     """Test settings"""
     slow_api_time: float = 1.0
-
-
-settings = Settings()
-
-
-if __name__ == '__main__':
-    print(settings.model_dump())
-    print(BASE_DIR)

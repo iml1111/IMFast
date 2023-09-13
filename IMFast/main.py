@@ -4,9 +4,10 @@ Application Management Module
 import click
 from fastapi import FastAPI
 from app import create_app
-from settings import settings
+from settings import Settings
 
-application: FastAPI = create_app(settings)
+
+application: FastAPI = create_app(Settings())
 
 
 @click.group()
