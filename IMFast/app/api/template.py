@@ -19,7 +19,8 @@ async def index(request: Request):
     - **author**: IML
     """
     return templating(
-        'index.html',
+        request=request,
+        name='index.html',
         context={
             'request': request,
             'description': request.app.settings.description
