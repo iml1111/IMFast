@@ -2,7 +2,7 @@ import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 __AUTHOR__ = "IML"
-__VERSION__ = "0.6.1"
+__VERSION__ = "0.7.1"
 
 APP_NAME = "IMFast"
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     contact_email: str = "shin10256@gmail.com"
     # Documentation url
     docs_url: str = "/docs"
+    redoc_url: str = "/redoc"
     # JWT settings
     secret_key: str = "super-secret"
     jwt_algorithm: str = "HS256"
