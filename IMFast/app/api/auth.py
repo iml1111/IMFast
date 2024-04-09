@@ -25,15 +25,15 @@ async def login(
             "message": "Login Success",
             "access_token": create_access_token(
                 username,
-                expires_delta=settings.access_token_expire,
-                secret_key=settings.secret_key,
-                algorithm=settings.algorithm
+                expires_delta=settings.jwt_access_expires,
+                secret_key=settings.jwt_secret_key,
+                algorithm=settings.jwt_algorithm
             ),
             "refresh_token": create_refresh_token(
                 username,
-                expires_delta=settings.refresh_token_expire,
-                secret_key=settings.secret_key,
-                algorithm=settings.algorithm
+                expires_delta=settings.jwt_refresh_expires,
+                secret_key=settings.jwt_secret_key,
+                algorithm=settings.jwt_algorithm
             )
         })
     else:
@@ -56,15 +56,15 @@ async def refresh(
         "message": "Refresh Success",
         "access_token": create_access_token(
             identity,
-            expires_delta=settings.access_token_expire,
-            secret_key=settings.secret_key,
-            algorithm=settings.algorithm
+            expires_delta=settings.jwt_access_expires,
+            secret_key=settings.jwt_secret_key,
+            algorithm=settings.jwt_algorithm
         ),
         "refresh_token": create_refresh_token(
             identity,
-            expires_delta=settings.refresh_token_expire,
-            secret_key=settings.secret_key,
-            algorithm=settings.algorithm
+            expires_delta=settings.jwt_refresh_expires,
+            secret_key=settings.jwt_secret_key,
+            algorithm=settings.jwt_algorithm
         )
     })
 

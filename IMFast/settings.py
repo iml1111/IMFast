@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     docs_url: str = "/docs"
     redoc_url: str = "/redoc"
     # JWT settings
-    secret_key: str = "super-secret"
+    jwt_secret_key: str = "super-secret"
     jwt_algorithm: str = "HS256"
     jwt_access_expires: int = 3600 * 24 * 7
     jwt_refresh_expires: int = 3600 * 24 * 30

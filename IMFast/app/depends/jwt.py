@@ -22,8 +22,8 @@ async def access_token(
         raise JWTError("Bearer Token is required")
     if not is_access(
         token,
-        secret_key=settings.secret_key,
-        algorithm=settings.algorithm
+        secret_key=settings.jwt_secret_key,
+        algorithm=settings.jwt_algorithm
     ):
         raise JWTError("Token is access token")
     identity = get_identity(token)
@@ -42,12 +42,16 @@ async def refresh_token(
         token = token[7:]
     else:
         raise JWTError("Bearer Token is required")
-    if not is_refresh(token):
+    if not is_refresh(
+        token,
+        secret_key=settings.jwt_secret_key,
+        algorithm=settings.jwt_algorithm
+    ):
         raise JWTError("Token is not refresh token")
     identity = get_identity(
         token,
-        secret_key=settings.secret_key,
-        algorithm=settings.algorithm
+        secret_key=settings.jwt_secret_key,
+        algorithm=settings.jwt_algorithm
     )
     return identity
 
